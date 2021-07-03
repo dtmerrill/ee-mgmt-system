@@ -5,9 +5,9 @@ const { listenerCount } = require("events");
 const connection = mysql.createConnection({
   host: "localhost",
   port: 3306,
-  user: "root",
-  password: "Tru34un4sql",
-  database: "all_ee_DB",
+  user: "/.env/DB_USER",
+  password: "/.env/DB_PW",
+  database: "/.env/DB_NAME",
 });
 
 connection.connect((err) => {
