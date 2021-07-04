@@ -1,11 +1,10 @@
-## Project Headline: Command Line CMS - Employee Tracker<br><br><br>
+## Project Headline: Command Line CMS - Employee Tracker<br><br>
     Table of Contents:  
 [Project Why](#why)<br>
-[Project Designers Contact/Github](#contact)<br><br><br>
+[Project Designers Contact/Github](#contact)<br><br>
     
     
 ## Why, What and How, Installation, Usage, Contributors, and Testing
-#### (why)
 <br><br>
 Project Why: The use and management of data can make or break an organization. This project provides a simple, yet effective, take on employee data management in the context of a live theater venue.
 <br>
