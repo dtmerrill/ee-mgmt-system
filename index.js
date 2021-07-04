@@ -25,68 +25,243 @@ const action = () => {
         type: "rawlist",
         message: "What do you want to do?",
         choices: [
-          "view all employees",
-          "view all employees by role",
-          "view all employees by department",
-          "add employee",
-          "add role",
-          "add department",
-          "update employee role",
-        //   "update employee manager",
-        //   "delete employee",
-        //   "delete role",
-        //   "delete department",
-        //   "view department budget",
+          "View All Employees",
+          "View All Roles",
+          "View All Departments",
+          "Add an Employee",
+          "Add a Role",
+          "Add a Department",
+          "Update an Employee's Role",
+          "Quit"
+        //   "Update an Employee's Manager",
+        //   "Delete an Employee",
+        //   "Delete a Role",
+        //   "Delete a Department",
+        //   "View a Department's Budget",
         ],
       },
     ])
     .then((answer) => {
       switch (answer.action-list) {
-        case "view all employees":
-          viewEmployees();
+        case "View All Employees":
+          viewEes();
           break;
-        case "view all employees by role":
-          employeesByRole();
+        case "View All Roles":
+          viewRoles();
+          break;
+        case "View All Departments":
+          viewDepts();
+          break;
+        case "Add an Employee":
+          addEe();
+          break;
+        case "Add a Role":
+          addRole();
+          break;
+        case "Add a Department":
+          addDept();
+          break;
+        case "Update an Employee's Role":
+          updateEeRole();
+          break;
+        case "Quit";
+          connection.end();
           break;
         default:
-          console.log(`Invalid action: ${answer.action-list}`);
+          console.log(`Please select an action: ${answer.action-list}`);
           break;
       }
     });
 };
-// db join construction
-const viewEmployees = () => {
+// view functions
+const viewEes = () => {
   const query = "SELECT * FROM employee";
   connection.query(query, (err, res) => {
-    console.table(res);
+    if (err) throw err;
+    console.table("Employees: ", res);
   });
   action();
 };
+const viewRoles = () => {
+    const query = "SELECT * FROM role";
+    connection.query(query, (err, res) => {
+      if (err) throw err;
+      console.table("Roles: ", res);
+    });
+    action();
+  };
+  const viewDepts = () => {
+    const query = "SELECT * FROM department";
+    connection.query(query, (err, res) => {
+      if (err) throw err;
+      console.table("Departments: ", res);
+    });
+    action();
+  };
 
-const employeesByRole = () => {
-  connection.query("SELECT * FROM role", (err, res) => {
-    if (err) throw err;
-    inquirer
-      .prompt({
-        name: "select_role",
-        type: "rawlist",
-        message: "What role do you want to list employees by?",
-        choices() {
-          const choiceArray = [];
-          res.forEach(({ title }) => {
-            choiceArray.push(title);
-          });
-          return choiceArray;
-        },
-      })
-      .then((answer) => {
-        console.log(answer);
-        const query =
-          "SELECT employee.first_name, employee.last_name, role.id FROM employee JOIN role ON employee WHERE employee.role_id = role.id";
-        connection.query(query, (err, res) => {
-          console.log(res);
-          console.table(res);
-        });
-      });
+// add functions
+const addEe = () =>
+inquirer
+  .prompt([
+    {
+      message: 'Enter first name of new employee:',
+      type: 'input',
+      name: 'eeFirstName',
+    },
+    {
+      message: 'Enter last name of new employee:',
+      type: 'input',
+      name: 'eeLastName',
+    },
+    {
+      message: 'Enter Role ID of new employee:',
+      type: 'input',
+      name: 'eeRole',
+    },
+    {
+      message: 'Enter Manager ID of new employee:',
+      type: 'input',
+      name: 'eeMgrId',
+    },
+  ])
+  .then(answer => {
+    connection.query(
+      'INSERT INTO employee SET ?',
+      {
+        first_name: answer.eeFirstName,
+        last_name: answer.eeLastName,
+        role_id: answer.eeRole,
+        manager_id: answer.eeMgrId,
+      },
+      function(err, res) {
+        if (err) throw err;
+        console.log(
+          `You have created the employee: ${answer.eeFirstName} ${answer.eeLastName}.`
+        );
+        action();
+      }
+    );
   });
+
+const addRole = () =>
+inquirer
+  .prompt([
+    {
+      message: 'Enter a new Title: ',
+      type: 'input',
+      name: 'newRoleTitle',
+    },
+    {
+      message: 'Enter the Salary for this Title: ',
+      type: 'input',
+      name: 'newRoleSalary',
+    },
+    {
+      message: 'Enter a Department ID for this Title: ',
+      type: 'input',
+      name: 'newRoleDeptId',
+    },
+  ])
+  .then(answer => {
+    connection.query(
+      'INSERT INTO role SET ?',
+      {
+        title: answer.newRoleTitle,
+        salary: answer.newRoleSalary,
+        department_id: answer.newRoleDeptId,
+      },
+      function(err, res) {
+        if (err) throw err;
+        console.log(
+          `You have created the Role: ${answer.newRoleTitle}.`
+        );
+        action();
+      }
+    );
+  });
+
+const addDept = () =>
+inquirer
+    .prompt([
+      {
+        message: 'Enter a new Department Name: ',
+        type: 'input',
+        name: 'newDeptName',
+      },
+    ])
+    .then(answer => {
+      connection.query(
+        'INSERT INTO department SET ?',
+        {
+          name: answer.newDeptName,
+        },
+        function(err, res) {
+          if (err) throw err;
+          console.log(
+            `You have created the Department: ${answer.newDeptName}.`
+          );
+          action();
+        }
+      );
+    });
+
+// update role function
+const updateEeRole = () => {
+    const eeListArray = [];
+    const roleListArray = [];
+    connection.query(
+        `SELECT CONCAT (employee.first_name, ' ', employee.last_name) as employee FROM all_ee_DB.employee`,
+        (err, res) => {
+        if (err) throw err;
+        for (let i = 0; i < res.length; i++) {
+            eeListArray.push(res[i].employee);
+    }
+    connection.query(
+        `SELECT title FROM all_ee_DB.role`,
+        (err, res) => {
+        if (err) throw err;
+        for (let i = 0; i < res.length; i++) {
+            roleListArray.push(res[i].title);
+        }
+    
+    inquirer
+        .prompt([
+        {
+            name: 'name',
+            type: 'list',
+            message: `Whose role would you like to change?`,
+            choices: eeListArray,
+        },
+        {
+            name: 'role',
+            type: 'list',
+            message: 'What should his/her role be?',
+            choices: roleListArray,
+        },
+        ])
+            .then(answers => {
+            let currentRole;
+            const name = answers.name.split(' ');
+            connection.query(
+                `SELECT id FROM all_ee_DB.role WHERE title = '${answers.role}'`,
+                (err, res) => {
+                if (err) throw err;
+                for (let i = 0; i < res.length; i++) {
+                    currentRole = res[i].id;
+                }
+                connection.query(
+                    `UPDATE all_ee_DB.employee SET role_id = ${currentRole} WHERE first_name= '${name[0]}' AND last_name= '${name[1]}';`,
+                    (err, res) => {
+                    if (err) throw err;
+                    console.log(`You have successfully updated the role.`);
+                    action();
+                    }
+                );
+            }
+            );
+        });
+        }
+    ); 
+    }
+    );
 };
