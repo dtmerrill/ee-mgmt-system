@@ -1,4 +1,4 @@
-USE all_ee_DB;
+USE all_ee_db;
 
 INSERT INTO department (name)
 VALUES ('Direction'), ('Acting'), ('Management'), ('Lighting'), ('Sound'), ('Sets');

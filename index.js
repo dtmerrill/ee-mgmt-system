@@ -210,14 +210,14 @@ const updateEeRole = () => {
     const eeListArray = [];
     const roleListArray = [];
     connection.query(
-        `SELECT CONCAT (employee.first_name, ' ', employee.last_name) as employee FROM all_ee_DB.employee`,
+        `SELECT CONCAT (employee.first_name, ' ', employee.last_name) as employee FROM all_ee_db.employee`,
         (err, res) => {
         if (err) throw err;
         for (let i = 0; i < res.length; i++) {
             eeListArray.push(res[i].employee);
     }
     connection.query(
-        `SELECT title FROM all_ee_DB.role`,
+        `SELECT title FROM all_ee_db.role`,
         (err, res) => {
         if (err) throw err;
         for (let i = 0; i < res.length; i++) {
@@ -243,14 +243,14 @@ const updateEeRole = () => {
             let currentRole;
             const name = answers.name.split(' ');
             connection.query(
-                `SELECT id FROM all_ee_DB.role WHERE title = '${answers.role}'`,
+                `SELECT id FROM all_ee_db.role WHERE title = '${answers.role}'`,
                 (err, res) => {
                 if (err) throw err;
                 for (let i = 0; i < res.length; i++) {
                     currentRole = res[i].id;
                 }
                 connection.query(
-                    `UPDATE all_ee_DB.employee SET role_id = ${currentRole} WHERE first_name= '${name[0]}' AND last_name= '${name[1]}';`,
+                    `UPDATE all_ee_db.employee SET role_id = ${currentRole} WHERE first_name= '${name[0]}' AND last_name= '${name[1]}';`,
                     (err, res) => {
                     if (err) throw err;
                     console.log(`You have successfully updated the role.`);

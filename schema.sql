@@ -1,7 +1,7 @@
-DROP DATABASE IF EXISTS all_ee_DB;
-CREATE database all_ee_DB;
+DROP DATABASE IF EXISTS all_ee_db;
+CREATE database all_ee_db;
 
-USE all_ee_DB;
+USE all_ee_db;
 
 CREATE TABLE department (
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
