@@ -64,7 +64,7 @@ const action = () => {
         case "Update an Employee's Role":
           updateEeRole();
           break;
-        case "Quit";
+        case "Quit":
           connection.end();
           break;
         default:
