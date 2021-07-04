@@ -9,11 +9,15 @@
 <br><br>
 Project Why: The use and management of data can make or break an organization. This project provides a simple, yet effective, take on employee data management in the context of a live theater venue.
 <br>
+<br>
 Project What: A command line interface with MySQL allows the administrator to view and update employment data (Department-, Role- and Employee-specific information) through clean question/answer steps.
+<br>
 <br>
 Project How: JavaScript and MySQL files interacted with through NodeJS.
 <br>
+<br>
 Installation Instructions:  node packages: inquirer, MySQL and console.table
+<br>
 <br>
 Usage Information: Once the files are where they need to be, open your terminal and start node index.js - then, just answer the questions that come up.
 
