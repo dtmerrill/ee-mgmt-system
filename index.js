@@ -83,7 +83,7 @@ const viewEes = () => {
   action();
 };
 const viewRoles = () => {
-    const query = "SELECT * FROM role";
+    const query = "SELECT * FROM work_role";
     connection.query(query, (err, res) => {
       if (err) throw err;
       console.table("Roles: ", res);
@@ -164,7 +164,7 @@ inquirer
   ])
   .then(answer => {
     connection.query(
-      'INSERT INTO role SET ?',
+      'INSERT INTO work_role SET ?',
       {
         title: answer.newRoleTitle,
         salary: answer.newRoleSalary,
@@ -193,7 +193,7 @@ inquirer
       connection.query(
         'INSERT INTO department SET ?',
         {
-          name: answer.newDeptName,
+          dept_name: answer.newDeptName,
         },
         function(err, res) {
           if (err) throw err;
@@ -217,7 +217,7 @@ const updateEeRole = () => {
             eeListArray.push(res[i].employee);
     }
     connection.query(
-        `SELECT title FROM all_ee_db.role`,
+        `SELECT title FROM all_ee_db.work_role`,
         (err, res) => {
         if (err) throw err;
         for (let i = 0; i < res.length; i++) {
@@ -233,7 +233,7 @@ const updateEeRole = () => {
             choices: eeListArray,
         },
         {
-            name: 'role',
+            name: 'work_role',
             type: 'list',
             message: 'What should his/her role be?',
             choices: roleListArray,
@@ -243,7 +243,7 @@ const updateEeRole = () => {
             let currentRole;
             const name = answers.name.split(' ');
             connection.query(
-                `SELECT id FROM all_ee_db.role WHERE title = '${answers.role}'`,
+                `SELECT id FROM all_ee_db.work_role WHERE title = '${answers.work_role}'`,
                 (err, res) => {
                 if (err) throw err;
                 for (let i = 0; i < res.length; i++) {
