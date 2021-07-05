@@ -3,11 +3,11 @@ const mysql = require("mysql");
 const consoleTable = require("console.table");
 const { listenerCount } = require("events");
 const connection = mysql.createConnection({
-  host: "localhost",
+  host: 'localhost',
   port: 3306,
-  user: "/.env/DB_USER",
-  password: "/.env/DB_PW",
-  database: "/.env/DB_NAME",
+  user: 'root',
+  password: 'Tru34un4sql',
+  database: 'all_ee_db',
 });
 
 connection.connect((err) => {
@@ -21,8 +21,8 @@ const action = () => {
   inquirer
     .prompt([
       {
-        name: "action-list",
-        type: "rawlist",
+        name: "choice",
+        type: "list",
         message: "What do you want to do?",
         choices: [
           "View All Employees",
@@ -42,7 +42,7 @@ const action = () => {
       },
     ])
     .then((answer) => {
-      switch (answer.action-list) {
+      switch (answer.choice) {
         case "View All Employees":
           viewEes();
           break;
@@ -68,10 +68,11 @@ const action = () => {
           connection.end();
           break;
         default:
-          console.log(`Please select an action: ${answer.action-list}`);
+          console.log(`Please select an action: ${answer.choice}`);
           break;
       }
     });
+    //action();
 };
 // view functions
 const viewEes = () => {

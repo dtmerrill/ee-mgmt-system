@@ -6,7 +6,7 @@ USE all_ee_db;
 CREATE TABLE department (
   id INT NOT NULL AUTO_INCREMENT,
   dept_name VARCHAR(30) NULL,
-  PRIMARY KEY (id),
+  PRIMARY KEY (id)
 );
 
 CREATE TABLE work_role (
