@@ -23,10 +23,10 @@ Usage Information: Once the files are where they need to be, open your terminal 
 
 Repo:  https://github.com/dtmerrill/ee-mgmt-system
 
-ScreenCastify Recording (This is the video showing the code working): https://drive.google.com/file/d/1BRbvhGzq2feXBBkincs9pXjGqPhhm3cY/view
+ScreenCastify Recording (This is the video showing the code working): https://drive.google.com/file/d/1wr4K_rc6Iif2dHMZpgnCf-eexJxWb_3z/view
 
 
-![Screenshot of the whole deal.](./assets/good-readme-gen-screenshot.png)
+![Screenshot of the whole deal.](./assets/RunningViewRoles&Ees.png)
 
 
 <br>
